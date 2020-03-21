@@ -4,7 +4,7 @@ OpenXMLPlayground is a project created to test the **OpenXML's properties** and
 develop methods **for an easiest use of OpenXML in Visual Studio** in the process 
 of creating a Office document
 
-*Project version: 1.2.5*
+*Project version: __1.2.5__*
 
 --------------------------------
 *Project specifics:*
