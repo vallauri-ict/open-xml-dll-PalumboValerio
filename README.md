@@ -4,7 +4,7 @@ OpenXMLPlayground is a project created to test the **OpenXML's properties** and
 develop methods **for an easiest use of OpenXML in Visual Studio** in the process 
 of creating a Office document
 
-Project version: **1.2.5**
+Project version:  **1.2.5**
 --------------------------------
 Project specifics:
 1. Create a default Word document;
@@ -14,6 +14,7 @@ Project specifics:
 
 By Palumbo Valerio Sebastiano
 
+my Social Media | Links
 ------------- | ------------------------------------------------------------------
 my Instagram: | [palumbo__valerio](https://www.instagram.com/palumbo__valerio/)
 my Youtube Channel: | [RedX64](https://www.youtube.com/channel/UCWOLxDm6jrNPUvrkjsRmscg?view_as=subscriber)
