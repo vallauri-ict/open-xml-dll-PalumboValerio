@@ -22,3 +22,11 @@ D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\Open
 D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\OpenXMLPlaygroundSolution\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.csproj.CopyComplete
 D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\OpenXMLPlaygroundSolution\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.dll
 D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\OpenXMLPlaygroundSolution\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.pdb
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\bin\Debug\OpenXmlUtilities.dll
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\bin\Debug\OpenXmlUtilities.pdb
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.csprojAssemblyReference.cache
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.csproj.CopyComplete
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.dll
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlUtilities\obj\Debug\OpenXmlUtilities.pdb

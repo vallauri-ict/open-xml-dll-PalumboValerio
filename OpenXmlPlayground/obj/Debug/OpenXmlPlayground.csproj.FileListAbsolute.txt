@@ -40,3 +40,17 @@ D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\Open
 D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\OpenXMLPlaygroundSolution\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.csproj.CopyComplete
 D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\OpenXMLPlaygroundSolution\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.exe
 D:\00_VALERIO\00_Backup_chiavetta_3.0\02-Informatica\01-Progetti\02-Oggetti\OpenXMLPlaygroundSolution\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.pdb
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\OpenXmlPlayground.exe.config
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\OpenXmlPlayground.exe
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\OpenXmlPlayground.pdb
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\OpenXmlUtilities.dll
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\OpenXmlUtilities.pdb
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.csprojAssemblyReference.cache
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.FormMain.resources
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.Properties.Resources.resources
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.csproj.GenerateResource.cache
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.csproj.CopyComplete
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.exe
+C:\Users\Valerio\Documents\GitHub\open-xml-dll-PalumboValerio\OpenXmlPlayground\obj\Debug\OpenXmlPlayground.pdb
