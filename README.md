@@ -5,6 +5,7 @@ develop methods **for an easiest use of OpenXML in Visual Studio** in the proces
 of creating a Office document
 
 *Project version: 1.2.5*
+
 --------------------------------
 *Project specifics:*
 1. Create a default Word document;
