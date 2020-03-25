@@ -12,7 +12,7 @@ using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
 
 namespace OpenXmlUtilities
 {
-    public class ClsOpenXmlUtilities
+    public class OpenXmlWordUtilities
     {
         public static void InsertPicture(WordprocessingDocument wordprocessingDocument, string fileName)
         {
@@ -95,7 +95,7 @@ namespace OpenXmlUtilities
             wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
         }
 
-        public static void AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000")
+        public static RunProperties AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, bool isOnlyRun = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000", UnderlineValues underline = UnderlineValues.Single)
         {
             // we have to set the properties
             RunProperties rPr = new RunProperties();
@@ -106,26 +106,29 @@ namespace OpenXmlUtilities
             rPr.Append(rFont);
             if (isBold) rPr.Append(new Bold());
             if (isItalic) rPr.Append(new Italic());
-            if (isUnderline) rPr.Append(new Underline() { Val = UnderlineValues.Single });
+            if (isUnderline) rPr.Append(new Underline() { Val = underline });
             rPr.Append(new FontSize() { Val = (fontSize * 2).ToString() });
-
-            Style style = new Style();
-            style.StyleId = styleId;
-            if (styleName == null || styleName.Length == 0) styleName = styleId;
-            style.Append(new Name() { Val = styleName });
-            style.Append(rPr); //we are adding properties previously defined
-
-            // we have to add style that we have created to the StylePart
-            StyleDefinitionsPart stylePart;
-            if (mainPart.StyleDefinitionsPart == null)
+            if(!isOnlyRun)
             {
-                stylePart = mainPart.AddNewPart<StyleDefinitionsPart>();
-                stylePart.Styles = new Styles();
+                Style style = new Style();
+                style.StyleId = styleId;
+                if (styleName == null || styleName.Length == 0) styleName = styleId;
+                style.Append(new Name() { Val = styleName });
+                style.Append(rPr); //we are adding properties previously defined
+
+                // we have to add style that we have created to the StylePart
+                StyleDefinitionsPart stylePart;
+                if (mainPart.StyleDefinitionsPart == null)
+                {
+                    stylePart = mainPart.AddNewPart<StyleDefinitionsPart>();
+                    stylePart.Styles = new Styles();
+                }
+                else stylePart = mainPart.StyleDefinitionsPart;
+
+                stylePart.Styles.Append(style);
+                stylePart.Styles.Save(); // we save the style part
             }
-            else stylePart = mainPart.StyleDefinitionsPart;
-            
-            stylePart.Styles.Append(style);
-            stylePart.Styles.Save(); // we save the style part
+            return rPr;
         }
 
         public static Paragraph CreateParagraphWithStyle(string styleId, JustificationValues justification = JustificationValues.Left)
@@ -141,10 +144,12 @@ namespace OpenXmlUtilities
             return paragraph;
         }
 
-        public static void AddTextToParagraph(Paragraph paragraph, string content)
+        public static void AddTextToParagraph(Paragraph paragraph, string content, SpaceProcessingModeValues space = SpaceProcessingModeValues.Default, RunProperties rpr = null)
         {
             Run r = new Run();
-            Text t = new Text(content);
+            // Always add properties first
+            r.Append(rpr);
+            Text t = new Text(content) { Space = space };
             r.Append(t);
             paragraph.Append(r);
         }
@@ -221,7 +226,7 @@ namespace OpenXmlUtilities
 
                     for (int j = 0; j < cell; j++)
                     {
-                        AddStyle(mainPart, bolds[y], italics[y], underlines[y], $"0{y}", $"Table{y}");
+                        AddStyle(mainPart, bolds[y], italics[y], underlines[y], false,  $"0{y}", $"Table{y}");
                         TableCell tc = new TableCell();
                         Paragraph p = CreateParagraphWithStyle($"0{y}", justifications[y]);
                         AddTextToParagraph(p, texts[y]);
