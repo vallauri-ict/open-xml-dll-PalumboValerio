@@ -26,7 +26,10 @@ public static void CreateBulletOrNumberedList(int indentLeft, int indentHanging,
 public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] italics, bool[] underlines, string[] texts, JustificationValues[] justifications, int right, int cell, string rgbColor = "000000", BorderValues borderValues = BorderValues.Thick){}
 ```
 
->Level of completeness: ```diff + 95%```
+>Level of completeness: 
+```diff 
++ 95%
+```
 
 ### OpenXmlExcelUtilities
 *List of public methods:*
