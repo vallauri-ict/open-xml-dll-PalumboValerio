@@ -29,6 +29,8 @@ public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] 
 + Level of completeness: 95%
 ```
 
++ 95%
+
 ### OpenXmlExcelUtilities
 *List of public methods:*
 ```csharp
