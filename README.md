@@ -29,7 +29,7 @@ public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] 
 
 ```
 
-`<p style="color:green">Level of completeness: 95%</p>`
+<p style="color:green">Level of completeness: 95%</p>
 
 ### OpenXmlExcelUtilities
 *List of public methods:*
