@@ -17,7 +17,7 @@ of creating a Office document
 
 ### OpenXmlWordUtilities
 *List of public methods:*
-```
+```csharp
 public static void InsertPicture(WordprocessingDocument wordprocessingDocument, string fileName){}
 public static RunProperties AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, bool isOnlyRun = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000", UnderlineValues underline = UnderlineValues.Single){}
 public static Paragraph CreateParagraphWithStyle(string styleId, JustificationValues justification = JustificationValues.Left){}
@@ -25,15 +25,13 @@ public static void AddTextToParagraph(Paragraph paragraph, string content, Space
 public static void CreateBulletOrNumberedList(int indentLeft, int indentHanging, List<Paragraph> paragraphs, int numberOfParagraph, string[] texts, bool isBullet = true){}
 public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] italics, bool[] underlines, string[] texts, JustificationValues[] justifications, int right, int cell, string rgbColor = "000000", BorderValues borderValues = BorderValues.Thick){}
 ```
-
->Level of completeness: 
-```diff 
-+ 95%
+```diff
+>Level of completeness:  + 95%
 ```
 
 ### OpenXmlExcelUtilities
 *List of public methods:*
-```
+```csharp
 public static void CreatePartsForExcel(SpreadsheetDocument document, TestModelList data){}
 ```
 
@@ -41,7 +39,7 @@ public static void CreatePartsForExcel(SpreadsheetDocument document, TestModelLi
 
 ### OpenXmlGeneralUtilities
 *List of public methods:*
-```
+```csharp
 public static string SelectPath(FolderBrowserDialog fbd){}
 public static string OutputFileName(string OutputFileDirectory, string fileExtension){}
 public static void ProcedureCompleted(string msg, string filepath){}
