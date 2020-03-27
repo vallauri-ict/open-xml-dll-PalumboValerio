@@ -26,7 +26,7 @@ public static void CreateBulletOrNumberedList(int indentLeft, int indentHanging,
 public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] italics, bool[] underlines, string[] texts, JustificationValues[] justifications, int right, int cell, string rgbColor = "000000", BorderValues borderValues = BorderValues.Thick){}
 ```
 
->Level of completeness: ![#c5f015](95%)
+>Level of completeness: ```diff + 95%```
 
 ### OpenXmlExcelUtilities
 *List of public methods:*
@@ -34,7 +34,7 @@ public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] 
 public static void CreatePartsForExcel(SpreadsheetDocument document, TestModelList data){}
 ```
 
->Level of completeness: ![#ffa500](50%)
+>Level of completeness: ```diff ! 50%```
 
 ### OpenXmlGeneralUtilities
 *List of public methods:*
@@ -45,7 +45,7 @@ public static void ProcedureCompleted(string msg, string filepath){}
 ```
 
 **For now it's only for a Windows Form project**
->Level of completeness: ![#ff0000](20%)
+>Level of completeness: ```diff - 20%```
 
 --------------------------------
 
