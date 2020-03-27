@@ -18,8 +18,8 @@ of creating a Office document
 ### OpenXmlWordUtilities
 *List of public methods:*
 ```csharp
-public static void InsertPicture(WordprocessingDocument wordprocessingDocument, string fileName){}
-public static RunProperties AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, bool isOnlyRun = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000", UnderlineValues underline = UnderlineValues.Single){}
+public static void InsertPicture(WordprocessingDocument wordprocessingDocument, string fileName)
+public static RunProperties AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, bool isOnlyRun = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000", UnderlineValues underline = UnderlineValues.Single)
 public static Paragraph CreateParagraphWithStyle(string styleId, JustificationValues justification = JustificationValues.Left){}
 public static void AddTextToParagraph(Paragraph paragraph, string content, SpaceProcessingModeValues space = SpaceProcessingModeValues.Default, RunProperties rpr = null){}
 public static void CreateBulletOrNumberedList(int indentLeft, int indentHanging, List<Paragraph> paragraphs, int numberOfParagraph, string[] texts, bool isBullet = true){}
@@ -29,15 +29,14 @@ public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] 
 + Level of completeness: 95%
 ```
 
-+ 95%
-
 ### OpenXmlExcelUtilities
 *List of public methods:*
 ```csharp
 public static void CreatePartsForExcel(SpreadsheetDocument document, TestModelList data){}
 ```
-
->Level of completeness: ```diff ! 50%```
+```diff
+! Level of completeness: 50%
+```
 
 ### OpenXmlGeneralUtilities
 *List of public methods:*
@@ -48,7 +47,9 @@ public static void ProcedureCompleted(string msg, string filepath){}
 ```
 
 **For now it's only for a Windows Form project**
->Level of completeness: ```diff - 20%```
+```diff
+- Level of completeness: 20%
+```
 
 --------------------------------
 
