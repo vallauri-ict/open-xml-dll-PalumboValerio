@@ -26,7 +26,7 @@ public static void CreateBulletOrNumberedList(int indentLeft, int indentHanging,
 public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] italics, bool[] underlines, string[] texts, JustificationValues[] justifications, int right, int cell, string rgbColor = "000000", BorderValues borderValues = BorderValues.Thick){}
 ```
 ```diff
->Level of completeness:  + 95%
++ Level of completeness: 95%
 ```
 
 ### OpenXmlExcelUtilities
