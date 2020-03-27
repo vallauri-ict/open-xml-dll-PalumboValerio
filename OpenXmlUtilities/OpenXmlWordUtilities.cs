@@ -154,7 +154,7 @@ namespace OpenXmlUtilities
             paragraph.Append(r);
         }
 
-        public static void CreateBulletNumberingPart(MainDocumentPart mainPart, string bulletChar = "-")
+        private static void CreateBulletNumberingPart(MainDocumentPart mainPart, string bulletChar = "-")
         {
             NumberingDefinitionsPart numberingPart =
                         mainPart.AddNewPart<NumberingDefinitionsPart>("NDPBullet");
@@ -202,7 +202,7 @@ namespace OpenXmlUtilities
                 InsertParagraphInList(paragraphs, ppUnordered, texts[i]);
         }
 
-        public static void InsertParagraphInList(List<Paragraph> paragraphs, ParagraphProperties ppUnordered, string text)
+        private static void InsertParagraphInList(List<Paragraph> paragraphs, ParagraphProperties ppUnordered, string text)
         {           
             Paragraph p = new Paragraph();
             p.ParagraphProperties = new ParagraphProperties(ppUnordered.OuterXml);
