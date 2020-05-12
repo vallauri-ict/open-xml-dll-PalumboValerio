@@ -1,22 +1,25 @@
-﻿using System;
+﻿#region Using
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-
 
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 using X15 = DocumentFormat.OpenXml.Office2013.Excel;
+#endregion
 
 namespace OpenXmlUtilities
 {
-    public class OpenXmlExcelUtilities
+    #region OpenXMLExcell
+    public class OpenXMLExcelUtilities
     {
-        public static void CreatePartsForExcel(SpreadsheetDocument document, TestModelList data)
+        public OpenXMLExcelUtilities() { }
+        /// <summary>
+        /// Create Excell document part
+        /// </summary>
+        public void CreatePartsForExcel(SpreadsheetDocument document, List<Dictionary<string, string>> data)
         {
             SheetData partSheetData = GenerateSheetdataForDetails(data);
 
@@ -30,7 +33,10 @@ namespace OpenXmlUtilities
             GenerateWorksheetPartContent(worksheetPart1, partSheetData);
         }
 
-        private static void GenerateWorkbookPartContent(WorkbookPart workbookPart1)
+        /// <summary>
+        /// Workbook part
+        /// </summary>
+        private void GenerateWorkbookPartContent(WorkbookPart workbookPart1)
         {
             Workbook workbook1 = new Workbook();
             Sheets sheets1 = new Sheets();
@@ -40,7 +46,10 @@ namespace OpenXmlUtilities
             workbookPart1.Workbook = workbook1;
         }
 
-        private static void GenerateWorksheetPartContent(WorksheetPart worksheetPart1, SheetData sheetData1)
+        /// <summary>
+        /// Worksheet part
+        /// </summary>
+        private void GenerateWorksheetPartContent(WorksheetPart worksheetPart1, SheetData sheetData1)
         {
             Worksheet worksheet1 = new Worksheet() { MCAttributes = new MarkupCompatibilityAttributes() { Ignorable = "x14ac" } };
             worksheet1.AddNamespaceDeclaration("r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
@@ -67,13 +76,16 @@ namespace OpenXmlUtilities
             worksheetPart1.Worksheet = worksheet1;
         }
 
-        private static void GenerateWorkbookStylesPartContent(WorkbookStylesPart workbookStylesPart1)
+        /// <summary>
+        /// Workbook styles
+        /// </summary>
+        private void GenerateWorkbookStylesPartContent(WorkbookStylesPart workbookStylesPart1)
         {
             Stylesheet stylesheet1 = new Stylesheet() { MCAttributes = new MarkupCompatibilityAttributes() { Ignorable = "x14ac" } };
             stylesheet1.AddNamespaceDeclaration("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
             stylesheet1.AddNamespaceDeclaration("x14ac", "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac");
 
-            
+
             Fonts fonts = new Fonts() { Count = (UInt32Value)2U, KnownFonts = true };
             Fills fills = new Fills() { Count = (UInt32Value)2U };
             PatternValues[] pv = { PatternValues.None, PatternValues.Gray125 };
@@ -188,41 +200,53 @@ namespace OpenXmlUtilities
             workbookStylesPart1.Stylesheet = stylesheet1;
         }
 
-        private static SheetData GenerateSheetdataForDetails(TestModelList data)
+        /// <summary>
+        /// Sheet data
+        /// </summary>
+        /// <returns> Sheet data </returns>
+        private SheetData GenerateSheetdataForDetails(List<Dictionary<string, string>> data)
         {
             SheetData sheetData1 = new SheetData();
-            sheetData1.Append(CreateHeaderRowForExcel());
+            sheetData1.Append(CreateHeaderRowForExcel(data));
 
-            foreach (TestModel testmodel in data.testData)
+            foreach (Dictionary<string, string> datas in data)
             {
-                Row partsRows = GenerateRowForChildPartDetail(testmodel);
+                Row partsRows = GenerateRowForChildPartDetail(datas);
                 sheetData1.Append(partsRows);
             }
             return sheetData1;
         }
 
-        private static Row CreateHeaderRowForExcel()
+        /// <summary>
+        /// Header row
+        /// </summary>
+        /// <returns> Row </returns>
+        private Row CreateHeaderRowForExcel(List<Dictionary<string, string>> header)
         {
             Row workRow = new Row();
-            workRow.Append(CreateCell("Test Id", 2U));
-            workRow.Append(CreateCell("Test Name", 2U));
-            workRow.Append(CreateCell("Test Description", 2U));
-            workRow.Append(CreateCell("Test Date", 2U));
+            foreach (var key in header[0].Keys)
+                workRow.Append(CreateCell(key, 2U));
+
             return workRow;
         }
 
-        private static Row GenerateRowForChildPartDetail(TestModel testmodel)
+        /// <summary>
+        /// Row for child
+        /// </summary>
+        private Row GenerateRowForChildPartDetail(Dictionary<string, string> datas)
         {
             Row tRow = new Row();
-            tRow.Append(CreateCell(testmodel.TestId.ToString()));
-            tRow.Append(CreateCell(testmodel.TestName));
-            tRow.Append(CreateCell(testmodel.TestDesc));
-            tRow.Append(CreateCell(testmodel.TestDate.ToShortDateString()));
-
+            foreach (string item in datas.Values)
+                tRow.Append(CreateCell(item));
+            
             return tRow;
         }
 
-        private static Cell CreateCell(string text)
+        /// <summary>
+        /// Create cell
+        /// </summary>
+        /// <returns> Cell </returns>
+        private Cell CreateCell(string text)
         {
             Cell cell = new Cell();
             cell.StyleIndex = 1U;
@@ -231,7 +255,10 @@ namespace OpenXmlUtilities
             return cell;
         }
 
-        private static Cell CreateCell(string text, uint styleIndex)
+        /// <summary>
+        /// Create cell
+        /// </summary>
+        private Cell CreateCell(string text, uint styleIndex)
         {
             Cell cell = new Cell();
             cell.StyleIndex = styleIndex;
@@ -240,7 +267,10 @@ namespace OpenXmlUtilities
             return cell;
         }
 
-        private static EnumValue<CellValues> ResolveCellDataTypeOnValue(string text)
+        /// <summary>
+        /// Resolve Cell Data Type
+        /// </summary>
+        private EnumValue<CellValues> ResolveCellDataTypeOnValue(string text)
         {
             int intVal;
             double doubleVal;
@@ -254,4 +284,5 @@ namespace OpenXmlUtilities
             }
         }
     }
+    #endregion
 }

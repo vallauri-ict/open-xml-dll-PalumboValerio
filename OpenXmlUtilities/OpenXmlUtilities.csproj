@@ -46,9 +46,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OpenXmlExcelUtilities.cs" />
-    <Compile Include="OpenXmlGeneralUtilities.cs" />
-    <Compile Include="OpenXmlWordUtilities.cs" />
+    <Compile Include="OpenXMLExcelUtilities.cs" />
+    <Compile Include="OpenXMLGeneralUtilities.cs" />
+    <Compile Include="OpenXMLWordUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestModel.cs" />
     <Compile Include="TestModelList.cs" />

@@ -13,6 +13,9 @@ namespace OpenXmlPlayground
 {
     public partial class FormMain : Form
     {
+        private OpenXMLWordUtilities wordUtilities = new OpenXMLWordUtilities();
+        private OpenXMLExcelUtilities excelUtilities = new OpenXMLExcelUtilities();
+        private OpenXMLGeneralUtilities generalUtilities = new OpenXMLGeneralUtilities();
         public FormMain()
         {
             InitializeComponent();
@@ -22,7 +25,7 @@ namespace OpenXmlPlayground
         {
             try
             {
-                string filepath = OpenXmlGeneralUtilities.OutputFileName(OpenXmlGeneralUtilities.SelectPath(fbd), "docx");
+                string filepath = generalUtilities.OutputFileName(generalUtilities.SelectPath(fbd), "docx");
 
                 using (WordprocessingDocument doc = WordprocessingDocument.Create(filepath, WordprocessingDocumentType.Document))
                 {
@@ -37,12 +40,12 @@ namespace OpenXmlPlayground
 
                     #region Style
                     // Define the styles
-                    OpenXmlWordUtilities.AddStyle(mainPart, false, true, true, false, "MyHeading1", "Titolone", "Verdana", 30, "0000FF");
-                    OpenXmlWordUtilities.AddStyle(mainPart, true, false, false, false, "MyTypescript", "Macchina da scrivere", "Courier New", 10, "333333");
+                    wordUtilities.AddStyle(mainPart, false, true, true, false, "MyHeading1", "Titolone", "Verdana", 30, "0000FF");
+                    wordUtilities.AddStyle(mainPart, true, false, false, false, "MyTypescript", "Macchina da scrivere", "Courier New", 10, "333333");
 
                     // Add MyHeading1 styled text
-                    Paragraph headingPar = OpenXmlWordUtilities.CreateParagraphWithStyle("MyHeading1", JustificationValues.Center);
-                    OpenXmlWordUtilities.AddTextToParagraph(headingPar, "Titolo con stile applicato");
+                    Paragraph headingPar = wordUtilities.CreateParagraphWithStyle("MyHeading1", JustificationValues.Center);
+                    wordUtilities.AddTextToParagraph(headingPar, "Titolo con stile applicato");
                     body.AppendChild(headingPar);
 
                     // Add simple text
@@ -53,8 +56,8 @@ namespace OpenXmlPlayground
 
                     // Add MyTypescript styled text
                    
-                    Paragraph typescriptParagraph = OpenXmlWordUtilities.CreateParagraphWithStyle("MyTypescript", JustificationValues.Left);
-                    OpenXmlWordUtilities.AddTextToParagraph(typescriptParagraph, "È universalmente riconosciuto che un lettore che osserva il layout di una pagina viene distratto dal contenuto testuale se questo è leggibile. Lo scopo dell’utilizzo del Lorem Ipsum è che offre una normale distribuzione delle lettere (al contrario di quanto avviene se si utilizzano brevi frasi ripetute, ad esempio “testo qui”), apparendo come un normale blocco di testo leggibile. Molti software di impaginazione e di web design utilizzano Lorem Ipsum come testo modello. Molte versioni del testo sono state prodotte negli anni, a volte casualmente, a volte di proposito (ad esempio inserendo passaggi ironici).");
+                    Paragraph typescriptParagraph = wordUtilities.CreateParagraphWithStyle("MyTypescript", JustificationValues.Left);
+                    wordUtilities.AddTextToParagraph(typescriptParagraph, "È universalmente riconosciuto che un lettore che osserva il layout di una pagina viene distratto dal contenuto testuale se questo è leggibile. Lo scopo dell’utilizzo del Lorem Ipsum è che offre una normale distribuzione delle lettere (al contrario di quanto avviene se si utilizzano brevi frasi ripetute, ad esempio “testo qui”), apparendo come un normale blocco di testo leggibile. Molti software di impaginazione e di web design utilizzano Lorem Ipsum come testo modello. Molte versioni del testo sono state prodotte negli anni, a volte casualmente, a volte di proposito (ad esempio inserendo passaggi ironici).");
                     body.AppendChild(typescriptParagraph);
 
                     // Append a paragraph with styles
@@ -69,31 +72,31 @@ namespace OpenXmlPlayground
                     bool[] underlines = { false, false, false, false };
                     string[] texts1 = { "A", "Nice", "Little", "Table" };
                     JustificationValues[] justifications = { JustificationValues.Left, JustificationValues.Left, JustificationValues.Left, JustificationValues.Center };
-                    Table myTable = OpenXmlWordUtilities.createTable(mainPart, bolds, italics, underlines, texts1, justifications, 2, 2, "CC0000");
+                    Table myTable = wordUtilities.CreateTable(mainPart, bolds, italics, underlines, texts1, justifications, 2, 2, "CC0000");
                     body.Append(myTable);
                     #endregion
 
                     #region List and Image
                     // Append bullet list
                     string[] texts2 = { "First element", "Second Element", "Third Element" };
-                    OpenXmlWordUtilities.CreateBulletNumberingPart(mainPart);
+                    wordUtilities.CreateBulletNumberingPart(mainPart);
                     List<Paragraph> bulletList = new List<Paragraph>();
-                    OpenXmlWordUtilities.CreateBulletOrNumberedList(100, 200, bulletList, texts2.Length, texts2);
+                    wordUtilities.CreateBulletOrNumberedList(100, 200, bulletList, texts2);
                     foreach (Paragraph paragraph in bulletList)
                         body.Append(paragraph);
 
                     // Append numbered list
                     List<Paragraph> numberedList = new List<Paragraph>();
-                    OpenXmlWordUtilities.CreateBulletOrNumberedList(100, 240, numberedList, texts2.Length, texts2, false);
+                    wordUtilities.CreateBulletOrNumberedList(100, 240, numberedList, texts2, false);
                     foreach (Paragraph paragraph in numberedList)
                         body.Append(paragraph);
 
                     // Append image
-                    OpenXmlWordUtilities.InsertPicture(doc, "panorama.jpg");
+                    wordUtilities.InsertPicture(doc, "panorama.jpg");
                     #endregion
                 }
 
-                OpenXmlGeneralUtilities.ProcedureCompleted("Il documento è pronto!", filepath);
+                ProcedureCompleted("Il documento è pronto!", filepath);
             }
             catch (Exception)
             {
@@ -103,19 +106,21 @@ namespace OpenXmlPlayground
 
         private void btnSimpleExcelText_Click(object sender, EventArgs e)
         {
-            string filepath = OpenXmlGeneralUtilities.OutputFileName(OpenXmlGeneralUtilities.SelectPath(fbd), "xlsx");
-            TestModelList tmList = new TestModelList();
-            tmList.testData = new List<TestModel>();
+            string filepath = generalUtilities.OutputFileName(generalUtilities.SelectPath(fbd), "xlsx");
 
-            ExcelPotentialTest(tmList);
+            
 
             try 
             {
+                List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+
+                ExcelPotentialTest(list);
+
                 using (SpreadsheetDocument package = SpreadsheetDocument.Create(filepath, SpreadsheetDocumentType.Workbook))
                 {
-                    OpenXmlExcelUtilities.CreatePartsForExcel(package, tmList);
+                    excelUtilities.CreatePartsForExcel(package, list);
 
-                    OpenXmlGeneralUtilities.ProcedureCompleted("Il documento è pronto!", filepath);
+                    ProcedureCompleted("Il documento è pronto!", filepath);
                 }
             }
             catch (Exception)
@@ -127,54 +132,61 @@ namespace OpenXmlPlayground
         private Paragraph WordPotentialTest(MainDocumentPart mainPart)
         {
             // Paragraph
-            Paragraph p = OpenXmlWordUtilities.CreateParagraphWithStyle("Titolo1", JustificationValues.Center);
+            Paragraph p = wordUtilities.CreateParagraphWithStyle("Titolo1", JustificationValues.Center);
 
             // Run 1
-            OpenXmlWordUtilities.AddTextToParagraph(p, "Pellentesque ", SpaceProcessingModeValues.Preserve);
+            wordUtilities.AddTextToParagraph(p, "Pellentesque ", SpaceProcessingModeValues.Preserve);
 
             // Run 2 - Bold
-            RunProperties rpr = OpenXmlWordUtilities.AddStyle(mainPart, true, false, false, true);
-            OpenXmlWordUtilities.AddTextToParagraph(p, "commodo ", SpaceProcessingModeValues.Preserve, rpr);
+            RunProperties rpr = wordUtilities.AddStyle(mainPart, true, false, false, true);
+            wordUtilities.AddTextToParagraph(p, "commodo ", SpaceProcessingModeValues.Preserve, rpr);
 
             // Run 3
-            OpenXmlWordUtilities.AddTextToParagraph(p, "rhoncus ", SpaceProcessingModeValues.Preserve);
+            wordUtilities.AddTextToParagraph(p, "rhoncus ", SpaceProcessingModeValues.Preserve);
 
             // Run 4 – Italic
-            rpr = OpenXmlWordUtilities.AddStyle(mainPart, false, true, false, true);
-            OpenXmlWordUtilities.AddTextToParagraph(p, "mauris ", SpaceProcessingModeValues.Preserve, rpr);
+            rpr = wordUtilities.AddStyle(mainPart, false, true, false, true);
+            wordUtilities.AddTextToParagraph(p, "mauris ", SpaceProcessingModeValues.Preserve, rpr);
 
             // Run 5
-            OpenXmlWordUtilities.AddTextToParagraph(p, ", sit ", SpaceProcessingModeValues.Preserve);
+            wordUtilities.AddTextToParagraph(p, ", sit ", SpaceProcessingModeValues.Preserve);
 
             // Run 6 – Italic , bold and underlined
-            rpr = OpenXmlWordUtilities.AddStyle(mainPart, true, true, true, true, "00", "Default", "Calibri", 12, "000000", UnderlineValues.WavyDouble);
-            OpenXmlWordUtilities.AddTextToParagraph(p, "amet ", SpaceProcessingModeValues.Preserve, rpr);
+            rpr = wordUtilities.AddStyle(mainPart, true, true, true, true, "00", "Default", "Calibri", 12, "000000", UnderlineValues.WavyDouble);
+            wordUtilities.AddTextToParagraph(p, "amet ", SpaceProcessingModeValues.Preserve, rpr);
 
             // Run 7
-            OpenXmlWordUtilities.AddTextToParagraph(p, "faucibus arcu ", SpaceProcessingModeValues.Preserve);
+            wordUtilities.AddTextToParagraph(p, "faucibus arcu ", SpaceProcessingModeValues.Preserve);
 
             // Run 8 – Red color
-            rpr = OpenXmlWordUtilities.AddStyle(mainPart, false, false, false, true, "00", "Default", "Calibri", 12, "FF0000");
-            OpenXmlWordUtilities.AddTextToParagraph(p, "porttitor ", SpaceProcessingModeValues.Preserve, rpr);
+            rpr = wordUtilities.AddStyle(mainPart, false, false, false, true, "00", "Default", "Calibri", 12, "FF0000");
+            wordUtilities.AddTextToParagraph(p, "porttitor ", SpaceProcessingModeValues.Preserve, rpr);
 
             // Run 9
-            OpenXmlWordUtilities.AddTextToParagraph(p, "pharetra. Maecenas quis erat quis eros iaculis placerat ut at mauris. ", SpaceProcessingModeValues.Preserve);
+            wordUtilities.AddTextToParagraph(p, "pharetra. Maecenas quis erat quis eros iaculis placerat ut at mauris. ", SpaceProcessingModeValues.Preserve);
 
             // return the new paragraph
             return p;
         }
 
-        private void ExcelPotentialTest(TestModelList tmList)
+        private void ExcelPotentialTest(List<Dictionary<string, string>> list)
         {
             for (int i = 0, y = 0; i < 4; i++, y--)
             {
-                TestModel tm = new TestModel();
-                tm.TestId = i + 1;
-                tm.TestName = $"Test{i + 1}";
-                tm.TestDesc = $"Tested {i + 1} time";
-                tm.TestDate = DateTime.Now.AddDays(y);
-                tmList.testData.Add(tm);
+                Dictionary<string, string> excelContent = new Dictionary<string, string>();
+
+                excelContent.Add("ID", (i + 1).ToString());
+                excelContent.Add("Name", $"Test{i + 1}");
+                excelContent.Add("Desc", $"Tested {i + 1} time");
+                excelContent.Add("Data", DateTime.Now.AddDays(y).ToShortDateString());
+                list.Add(excelContent);
             }
+        }
+
+        private void ProcedureCompleted(string msg, string filepath)
+        {
+            MessageBox.Show(msg);
+            Process.Start(filepath);
         }
     }
 }

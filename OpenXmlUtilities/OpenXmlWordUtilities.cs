@@ -1,20 +1,27 @@
-﻿using System;
-using System.IO;
+﻿#region Using
+using System;
 using System.Collections.Generic;
+using System.IO;
+
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Color = DocumentFormat.OpenXml.Wordprocessing.Color;
-
 using A = DocumentFormat.OpenXml.Drawing;
 using DW = DocumentFormat.OpenXml.Drawing.Wordprocessing;
 using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
+#endregion
 
 namespace OpenXmlUtilities
 {
-    public class OpenXmlWordUtilities
+    public class OpenXMLWordUtilities
     {
-        public static void InsertPicture(WordprocessingDocument wordprocessingDocument, string fileName)
+        #region Utilities
+        public OpenXMLWordUtilities() { }
+        /// <summary>
+        /// Set the program to add a picture in the document
+        /// </summary>
+        public void InsertPicture(WordprocessingDocument wordprocessingDocument, string fileName)
         {
             MainDocumentPart mainPart = wordprocessingDocument.MainDocumentPart;
             ImagePart imagePart = mainPart.AddImagePart(ImagePartType.Jpeg);
@@ -25,7 +32,11 @@ namespace OpenXmlUtilities
             AddImageToBody(wordprocessingDocument, mainPart.GetIdOfPart(imagePart));
         }
 
-        private static void AddImageToBody(WordprocessingDocument wordDoc, string relationshipId)
+        /// <summary>
+        /// Add a picture in the document
+        /// </summary>
+        /// <param name="relationshipId"> Image id </param>
+        private void AddImageToBody(WordprocessingDocument wordDoc, string relationshipId)
         {
             // Define the reference of the image.
             var element =
@@ -95,7 +106,17 @@ namespace OpenXmlUtilities
             wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
         }
 
-        public static RunProperties AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, bool isOnlyRun = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000", UnderlineValues underline = UnderlineValues.Single)
+        /// <summary>
+        /// Add a style to the document
+        /// </summary>
+        /// <param name="isBold"> true --> bold; false --> not bold</param>
+        /// <param name="isItalic"> true --> italic; false --> not italic </param>
+        /// <param name="isUnderline"> true --> underline; false --> not underline </param>
+        /// <param name="isOnlyRun"> If is true, return only a simple run, else do the other settings </param>
+        /// <param name="rgbColor"> Text color of the run </param>
+        /// <param name="underline"> Underline style </param>
+        /// <returns></returns>
+        public RunProperties AddStyle(MainDocumentPart mainPart, bool isBold = false, bool isItalic = false, bool isUnderline = false, bool isOnlyRun = false, string styleId = "00", string styleName = "Default", string fontName = "Calibri", int fontSize = 12, string rgbColor = "000000", UnderlineValues underline = UnderlineValues.Single)
         {
             // we have to set the properties
             RunProperties rPr = new RunProperties();
@@ -108,7 +129,7 @@ namespace OpenXmlUtilities
             if (isItalic) rPr.Append(new Italic());
             if (isUnderline) rPr.Append(new Underline() { Val = underline });
             rPr.Append(new FontSize() { Val = (fontSize * 2).ToString() });
-            if(!isOnlyRun)
+            if (!isOnlyRun)
             {
                 Style style = new Style();
                 style.StyleId = styleId;
@@ -131,10 +152,15 @@ namespace OpenXmlUtilities
             return rPr;
         }
 
-        public static Paragraph CreateParagraphWithStyle(string styleId, JustificationValues justification = JustificationValues.Left)
+        /// <summary>
+        /// Create a paragraph with a specific style
+        /// </summary>
+        /// <param name="justification"> Type of justification </param>
+        /// <returns></returns>
+        public Paragraph CreateParagraphWithStyle(string styleId, JustificationValues justification = JustificationValues.Left)
         {
             Paragraph paragraph = new Paragraph();
-            
+
             ParagraphProperties pp = new ParagraphProperties();
             // we set the style
             pp.ParagraphStyleId = new ParagraphStyleId() { Val = styleId };
@@ -144,7 +170,13 @@ namespace OpenXmlUtilities
             return paragraph;
         }
 
-        public static void AddTextToParagraph(Paragraph paragraph, string content, SpaceProcessingModeValues space = SpaceProcessingModeValues.Default, RunProperties rpr = null)
+        /// <summary>
+        /// Add text to paragraph
+        /// </summary>
+        /// <param name="content"> Text </param>
+        /// <param name="space"> Space style </param>
+        /// <param name="rpr"> Run properties </param>
+        public void AddTextToParagraph(Paragraph paragraph, string content, SpaceProcessingModeValues space = SpaceProcessingModeValues.Default, RunProperties rpr = null)
         {
             Run r = new Run();
             // Always add properties first
@@ -154,10 +186,12 @@ namespace OpenXmlUtilities
             paragraph.Append(r);
         }
 
-        private static void CreateBulletNumberingPart(MainDocumentPart mainPart, string bulletChar = "-")
+        /// <summary>
+        /// Create bullet numbering part
+        /// </summary>
+        public void CreateBulletNumberingPart(MainDocumentPart mainPart, string bulletChar = "-")
         {
-            NumberingDefinitionsPart numberingPart =
-                        mainPart.AddNewPart<NumberingDefinitionsPart>("NDPBullet");
+            NumberingDefinitionsPart numberingPart = mainPart.AddNewPart<NumberingDefinitionsPart>("NDPBullet");
             Numbering element =
               new Numbering(
                 new AbstractNum(
@@ -175,10 +209,16 @@ namespace OpenXmlUtilities
             element.Save(numberingPart);
         }
 
-        public static void CreateBulletOrNumberedList(int indentLeft, int indentHanging, List<Paragraph> paragraphs, int numberOfParagraph, string[] texts, bool isBullet = true)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paragraphs"> List of paragraphs </param>
+        /// <param name="texts"> Text of the list </param>
+        /// <param name="isBullet"> true --> Bullet list; false --> Numbered list </param>
+        public void CreateBulletOrNumberedList(int indentLeft, int indentHanging, List<Paragraph> paragraphs, string[] texts, bool isBullet = true)
         {
             int numberingLevelReference, numberingId;
-            if(isBullet)
+            if (isBullet)
             {
                 numberingLevelReference = 0;
                 numberingId = 1;
@@ -198,35 +238,50 @@ namespace OpenXmlUtilities
             ParagraphProperties ppUnordered = new ParagraphProperties(np, sbl, indent);
             ppUnordered.ParagraphStyleId = new ParagraphStyleId() { Val = "ListParagraph" };
 
-            for (int i = 0; i < numberOfParagraph; i++)
+            for (int i = 0; i < texts.Length; i++)
                 InsertParagraphInList(paragraphs, ppUnordered, texts[i]);
         }
 
-        private static void InsertParagraphInList(List<Paragraph> paragraphs, ParagraphProperties ppUnordered, string text)
-        {           
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paragraphs"> List of paragraphs </param>
+        /// <param name="ppUnordered"> Property </param>
+        private void InsertParagraphInList(List<Paragraph> paragraphs, ParagraphProperties ppUnordered, string text)
+        {
             Paragraph p = new Paragraph();
             p.ParagraphProperties = new ParagraphProperties(ppUnordered.OuterXml);
             p.Append(new Run(new Text(text)));
             paragraphs.Add(p);
         }
 
-        public static Table createTable(MainDocumentPart mainPart, bool[] bolds, bool[] italics, bool[] underlines, string[] texts, JustificationValues[] justifications, int right, int cell, string rgbColor = "000000", BorderValues borderValues = BorderValues.Thick)
+        /// <summary>
+        /// Create a personal table
+        /// </summary>
+        /// <param name="bolds"> Bold for every table elements </param>
+        /// <param name="italics"> Italic for every table elements </param>
+        /// <param name="underlines"> Underline for every table elements </param>
+        /// <param name="texts"> Text for every table elements </param>
+        /// <param name="justifications"> Type of justification </param>
+        /// <param name="borderValues"> Border style </param>
+        /// <returns></returns>
+        public Table CreateTable(MainDocumentPart mainPart, bool[] bolds, bool[] italics, bool[] underlines, string[] texts, JustificationValues[] justifications, int rows, int cell, string rgbColor = "000000", BorderValues borderValues = BorderValues.Thick)
         {
             if (bolds.Length == italics.Length && italics.Length == underlines.Length && underlines.Length == texts.Length)
             {
                 Table table = new Table();
                 // set table properties
-                table.AppendChild(getTableProperties(rgbColor, borderValues));
+                table.AppendChild(GetTableProperties(rgbColor, borderValues));
 
                 // row 1
                 int y = 0;
-                for (int i = 0; i < right; i++)
+                for (int i = 0; i < rows; i++)
                 {
                     TableRow tr = new TableRow();
 
                     for (int j = 0; j < cell; j++)
                     {
-                        AddStyle(mainPart, bolds[y], italics[y], underlines[y], false,  $"0{y}", $"Table{y}");
+                        AddStyle(mainPart, bolds[y], italics[y], underlines[y], false, $"0{y}", $"Table{y}");
                         TableCell tc = new TableCell();
                         Paragraph p = CreateParagraphWithStyle($"0{y}", justifications[y]);
                         AddTextToParagraph(p, texts[y]);
@@ -240,11 +295,15 @@ namespace OpenXmlUtilities
                 return table;
             }
             else
-                System.Windows.Forms.MessageBox.Show("Errore nella tabella! Numero di stili o testi diverso dal numero di paragrafi");
-            return null;
+                throw new Exception("Errore nella tabella! Numero di stili o testi diverso dal numero di paragrafi");
         }
 
-        private static TableProperties getTableProperties(string rgbColor, BorderValues borderValues)
+        /// <summary>
+        /// Set the table properties
+        /// </summary>
+        /// <param name="borderValues"> Border style </param>
+        /// <returns></returns>
+        private TableProperties GetTableProperties(string rgbColor, BorderValues borderValues)
         {
             TableProperties tblProperties = new TableProperties();
             TableBorders tblBorders = new TableBorders();
@@ -283,5 +342,6 @@ namespace OpenXmlUtilities
 
             return tblProperties;
         }
+        #endregion
     }
 }

@@ -9,9 +9,10 @@ using System.Diagnostics;
 
 namespace OpenXmlUtilities
 {
-    public class OpenXmlGeneralUtilities
+    public class OpenXMLGeneralUtilities
     {
-        public static string SelectPath(FolderBrowserDialog fbd)
+        public OpenXMLGeneralUtilities() { }
+        public string SelectPath(FolderBrowserDialog fbd)
         {
             string path = string.Empty;
 
@@ -21,7 +22,7 @@ namespace OpenXmlUtilities
             return path;
         }
 
-        public static string OutputFileName(string OutputFileDirectory, string fileExtension)
+        public string OutputFileName(string OutputFileDirectory, string fileExtension)
         {
             var datetime = DateTime.Now.ToString().Replace("/", "_").Replace(":", "_");
 
@@ -31,12 +32,6 @@ namespace OpenXmlUtilities
                 fileFullname = Path.Combine(OutputFileDirectory, $"Output_{datetime}.{fileExtension}");
 
             return fileFullname;
-        }
-
-        public static void ProcedureCompleted(string msg, string filepath)
-        {
-            MessageBox.Show(msg);
-            Process.Start(filepath);
         }
     }
 }
